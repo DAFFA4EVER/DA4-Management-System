@@ -1,0 +1,41 @@
+name: da4_management_client
+description: A new Flutter project.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.0.3 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  firebase_core:
+  intl:
+  shared_preferences:
+  sqflite:
+  path: 
+  permission_handler:
+  path_provider: 
+  cloud_firestore: 
+  firebase_core_platform_interface:
+  firebase_messaging: 
+  firebase_storage:
+  firebase_auth: 
+  firebase_app_check: 
+  provider:
+  encrypt:
+  flutter_barcode_scanner: 
+  camera:
+  qr_flutter:
+  fluttertoast:
+  image_picker: ^0.8.3
+  image_watermark:
+ 
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
