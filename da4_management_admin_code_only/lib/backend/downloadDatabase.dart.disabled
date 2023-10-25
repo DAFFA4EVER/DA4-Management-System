@@ -1,0 +1,39 @@
+import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'menuDatabaseHandlerAndroid.dart';
+import 'stockDatabaseHandlerAndroid.dart';
+
+Future<int> downloadDatabase(String option) async {
+  final List<String> databaseFiles = ['MenuDatabase.db', 'StockDatabase.db'];
+  String fileName = '';
+  String filePath = await StockDatabaseHandlerAndroid.instance.dataPath();
+
+  if (option == 'Menu') {
+    filePath = await MenuDatabaseHandlerAndroid.instance.dataPath();
+    fileName = databaseFiles[0];
+  } else {
+    fileName = databaseFiles[1];
+    filePath = await StockDatabaseHandlerAndroid.instance.dataPath();
+  }
+
+  try {
+    FirebaseStorage storage = FirebaseStorage.instance;
+
+    Reference ref = storage.ref().child(fileName);
+
+    File file = File(filePath);
+    await ref.writeToFile(file);
+
+    if (await file.exists()) {
+      print('File "$fileName" downloaded successfully.');
+      return 0;
+    } else {
+      print('File "$fileName" does not exist.');
+      return 2;
+    }
+  } catch (e, stackTrace) {
+    print('Error downloading databases: $e');
+    print(stackTrace);
+    return 3;
+  }
+}

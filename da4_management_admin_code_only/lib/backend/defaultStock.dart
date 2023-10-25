@@ -1,0 +1,290 @@
+List<Map<String, dynamic>> stockMixueDefault = [
+  {
+    'id': '20001',
+    'name': 'Cone Ice Cream',
+    'type': 'Bahan Baku Resep',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20002',
+    'name': 'Pudding Powder 1kg',
+    'type': 'Bahan Baku Resep',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20003',
+    'name': 'Non-Dairy Creamer (Sweet) 3kg',
+    'type': 'Bahan Baku Resep',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20004',
+    'name': 'Canned Red Beans Can 900g',
+    'type': 'Bahan Baku Resep',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20005',
+    'name': 'Kiwi Jam Can 850g',
+    'type': 'Bahan Baku Resep',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20006',
+    'name': 'Mango Jam Can 850g',
+    'type': 'Bahan Baku Resep',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20007',
+    'name': 'Tapioca Pearls (Boba) 1kg',
+    'type': 'Bahan Baku Resep',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20008',
+    'name': 'Strawberry Jam Can 900g',
+    'type': 'Bahan Baku Resep',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20009',
+    'name': 'Passion Fruit Jam Can 1200g',
+    'type': 'Bahan Baku Resep',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20010',
+    'name': 'Fructose Syrup 6.5kg',
+    'type': 'Bahan Baku Resep',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20011',
+    'name': 'Brown Sugar Syrup 3.3kg',
+    'type': 'Bahan Baku Resep',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20012',
+    'name': 'Sugar Syrup 6.5kg',
+    'type': 'Bahan Baku Resep',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20013',
+    'name': 'Chocolate Syrup 3.4kg',
+    'type': 'Bahan Baku Resep',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20014',
+    'name': 'Cinamon Black Tea 50g',
+    'type': 'Bahan Baku Resep',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20015',
+    'name': 'Emerald Jasmine Tea 60g',
+    'type': 'Bahan Baku Resep',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20016',
+    'name': 'Choco Crumb 1kg',
+    'type': 'Bahan Baku Resep',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20017',
+    'name': 'Yellow Peach Jam Can 900g',
+    'type': 'Bahan Baku Resep',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20018',
+    'name': 'Plastik Cup 700 (L)',
+    'type': 'Tempat Minum',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20019',
+    'name': 'Plastik Cup 500 (M)',
+    'type': 'Tempat Minum',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20020',
+    'name': 'Sundae Spoon (Sendok)',
+    'type': 'Tempat Minum',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20021',
+    'name': 'Disposable Spherical Tea Cover',
+    'type': 'Tempat Minum',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20022',
+    'name': 'Single Fine Straw (sedotan kecil)',
+    'type': 'Tempat Minum',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20023',
+    'name': 'Single Thick Straw (sedotan Besar)',
+    'type': 'Tempat Minum',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20024',
+    'name': 'Sealing Film (PET)',
+    'type': 'Tempat Minum',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20025',
+    'name': 'Vouche (6000/potong) 6000',
+    'type': 'Bahan Baku Resep',
+    'price': 6000,
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20026',
+    'name': 'Imported Lemon 1kg',
+    'type': 'Bahan Baku Resep',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20027',
+    'name': 'Big Cup Bag (Kantong)',
+    'type': 'Bahan Baku Resep',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20028',
+    'name': 'Double Cup Bag (Kantong)',
+    'type': 'Bahan Baku Resep',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20029',
+    'name': 'Paper Tray',
+    'type': 'Bahan Baku Resep',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20030',
+    'name': 'Plastik Cup 400 (U)',
+    'type': 'Bahan Baku Resep',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20031',
+    'name': 'Nata De Coco 2kg',
+    'type': 'Bahan Baku Resep',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20032',
+    'name': 'Canned Oats 900g',
+    'type': 'Bahan Baku Resep',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20033',
+    'name': 'Snow King Sundae Cup Blue',
+    'type': 'Bahan Baku Resep',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20034',
+    'name': 'Snow King Fruit Stirring Cup Orange',
+    'type': 'Bahan Baku Resep',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20035',
+    'name': 'Snow King Lemon Straw Cup',
+    'type': 'Bahan Baku Resep',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+  {
+    'id': '20036',
+    'name': 'Packaging Charge',
+    'type': 'Bahan Baku Resep',
+    'price': 0, // Replace with the actual price
+    'qty': 0, // Replace with the actual quantity
+    'unit': 'CTN',
+  },
+];

@@ -1,0 +1,45 @@
+import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'menuDatabaseHandlerAndroid.dart';
+import 'stockDatabaseHandlerAndroid.dart';
+
+Future<int> uploadDatabase(String Options) async {
+  final List<String> databaseFiles = ['MenuDatabase.db', 'StockDatabase.db'];
+  String fileName = '';
+  String filePath = await StockDatabaseHandlerAndroid.instance.dataPath();
+  if (Options == 'Menu') {
+    filePath = await MenuDatabaseHandlerAndroid.instance.dataPath();
+    fileName = databaseFiles[0];
+  } else {
+    fileName = databaseFiles[1];
+    filePath = await StockDatabaseHandlerAndroid.instance.dataPath();
+  }
+
+  try {
+    File file = File(filePath);
+
+    if (await file.exists()) {
+      print(filePath);
+      FirebaseStorage storage = FirebaseStorage.instance;
+      Reference ref = storage.ref().child(fileName);
+
+      UploadTask uploadTask = ref.putFile(file);
+
+      TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
+
+      if (taskSnapshot.state == TaskState.success) {
+        print('File "$fileName" uploaded successfully.');
+        return 0;
+      } else {
+        print('File "$fileName" failed to upload.');
+        return 1;
+      }
+    } else {
+      print('File "$fileName" does not exist.');
+      return 2;
+    }
+  } catch (e) {
+    print('Error uploading databases: $e');
+    return 3;
+  }
+}

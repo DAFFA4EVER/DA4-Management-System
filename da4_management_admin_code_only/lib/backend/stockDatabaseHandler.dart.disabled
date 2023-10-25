@@ -1,0 +1,74 @@
+import 'dart:convert';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:http/http.dart' as http;
+
+class StockDatabaseHandler {
+  static final StockDatabaseHandler instance =
+      StockDatabaseHandler._();
+  static List<Map<String, dynamic>>? _stockData;
+
+  StockDatabaseHandler._();
+
+  Future<List<Map<String, dynamic>>> fetchDataFromDatabase() async {
+    String fileName = 'stockDatabase.json';
+    FirebaseStorage storage = FirebaseStorage.instance;
+    Reference ref = storage.ref().child(fileName);
+    final url = await ref.getDownloadURL();
+
+    http.Response response = await http.get(Uri.parse(url));
+    String jsonString = response.body;
+
+    List<dynamic> jsonData = jsonDecode(jsonString);
+    List<Map<String, dynamic>> stockData =
+        jsonData.cast<Map<String, dynamic>>();
+
+    return stockData;
+  }
+
+  Future<List<Map<String, dynamic>>> getData() async {
+    if (_stockData != null) {
+      return _stockData!;
+    }
+
+    final stockData = await fetchDataFromDatabase();
+    _stockData = stockData;
+    return _stockData!;
+  }
+
+  Future<int> insertstock(Map<String, dynamic> stockData) async {
+    _stockData!.add(stockData);
+    return 1; // Return the number of inserted items (1 in this case)
+  }
+
+  Future<int> updatestock(Map<String, dynamic> stockData) async {
+    final stockID = stockData['id'];
+    int updatedCount = 0;
+
+    for (int i = 0; i < _stockData!.length; i++) {
+      if (_stockData![i]['id'] == stockID) {
+        _stockData![i] = stockData;
+        updatedCount++;
+      }
+    }
+
+    return updatedCount; // Return the number of updated items
+  }
+
+  Future<int> deletestock(String stockID) async {
+    int deletedCount = 0;
+
+    _stockData!.removeWhere((stock) {
+      if (stock['id'] == stockID) {
+        deletedCount++;
+        return true;
+      }
+      return false;
+    });
+
+    return deletedCount; // Return the number of deleted items
+  }
+
+  Future<void> deleteDatabaseFile() async {
+    _stockData = null; // Reset the data list
+  }
+}

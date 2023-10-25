@@ -1,0 +1,74 @@
+import 'dart:convert';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:http/http.dart' as http;
+
+class MenuDatabaseHandler {
+  static final MenuDatabaseHandler instance =
+      MenuDatabaseHandler._();
+  static List<Map<String, dynamic>>? _menuData;
+
+  MenuDatabaseHandler._();
+
+  Future<List<Map<String, dynamic>>> fetchDataFromDatabase() async {
+    String fileName = 'MenuDatabase.json';
+    FirebaseStorage storage = FirebaseStorage.instance;
+    Reference ref = storage.ref().child(fileName);
+    final url = await ref.getDownloadURL();
+
+    http.Response response = await http.get(Uri.parse(url));
+    String jsonString = response.body;
+
+    List<dynamic> jsonData = jsonDecode(jsonString);
+    List<Map<String, dynamic>> menuData =
+        jsonData.cast<Map<String, dynamic>>();
+
+    return menuData;
+  }
+
+  Future<List<Map<String, dynamic>>> getData() async {
+    if (_menuData != null) {
+      return _menuData!;
+    }
+
+    final menuData = await fetchDataFromDatabase();
+    _menuData = menuData;
+    return _menuData!;
+  }
+
+  Future<int> insertMenu(Map<String, dynamic> menuData) async {
+    _menuData!.add(menuData);
+    return 1; // Return the number of inserted items (1 in this case)
+  }
+
+  Future<int> updateMenu(Map<String, dynamic> menuData) async {
+    final menuID = menuData['id'];
+    int updatedCount = 0;
+
+    for (int i = 0; i < _menuData!.length; i++) {
+      if (_menuData![i]['id'] == menuID) {
+        _menuData![i] = menuData;
+        updatedCount++;
+      }
+    }
+
+    return updatedCount; // Return the number of updated items
+  }
+
+  Future<int> deleteMenu(String menuID) async {
+    int deletedCount = 0;
+
+    _menuData!.removeWhere((menu) {
+      if (menu['id'] == menuID) {
+        deletedCount++;
+        return true;
+      }
+      return false;
+    });
+
+    return deletedCount; // Return the number of deleted items
+  }
+
+  Future<void> deleteDatabaseFile() async {
+    _menuData = null; // Reset the data list
+  }
+}
