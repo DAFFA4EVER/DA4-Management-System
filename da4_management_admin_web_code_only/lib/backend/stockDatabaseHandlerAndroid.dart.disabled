@@ -1,0 +1,135 @@
+import 'dart:io';
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart' as path;
+import '../backend/getAppPath.dart';
+import 'defaultStock.dart';
+
+class StockDatabaseHandlerAndroid {
+  static final StockDatabaseHandlerAndroid instance =
+      StockDatabaseHandlerAndroid._();
+  static Database? _database;
+
+  StockDatabaseHandlerAndroid._();
+
+  Future<String> dataPath() async {
+    final getAppPath = GetAppPath();
+    await getAppPath.initializeApplicationPath();
+    String directory = getAppPath.applicationPath;
+    String fileName = 'StockDatabase.db';
+    String filePath = '$directory$fileName';
+    return filePath;
+  }
+
+  Future<Database> get database async {
+    if (_database != null) {
+      return _database!;
+    }
+
+    _database = await initDatabase();
+    return _database!;
+  }
+
+  Future<Database> initDatabase() async {
+    final databasePath = await getStockDatabasePath();
+
+    final bool databaseExists = await checkDatabaseExists(await dataPath());
+
+    if (!databaseExists) {
+      final getAppPath = GetAppPath();
+      await getAppPath.initializeApplicationPath();
+      String directory = getAppPath.applicationPath;
+
+      await createDatabaseDirectory(directory);
+
+      final db = await openDatabase(
+        databasePath,
+        version: 1,
+        onCreate: (db, version) async {
+          await db.execute(
+            'CREATE TABLE stocks (id TEXT PRIMARY KEY, name TEXT, type TEXT, price INTEGER, qty INTEGER, unit TEXT)',
+          );
+          await addDefaultStock(db);
+        },
+      );
+      return db;
+    }
+
+    return openDatabase(databasePath);
+  }
+
+  Future<void> addDefaultStock(Database db) async {
+    final stockMixue = stockMixueDefault;
+
+    final batch = db.batch();
+    for (var stock in stockMixue) {
+      batch.insert('stocks', stock);
+    }
+    await batch.commit();
+  }
+
+  Future<int> insertStock(Map<String, dynamic> stockData) async {
+    final db = await database;
+    return db.insert('stocks', stockData);
+  }
+
+  Future<List<Map<String, dynamic>>> getAllStock() async {
+    final db = await database;
+    return db.query('stocks');
+  }
+
+  Future<int> updateStock(Map<String, dynamic> stockData) async {
+    final db = await database;
+    final stockId = stockData['id'];
+
+    return db.update(
+      'stocks',
+      stockData,
+      where: 'id = ?',
+      whereArgs: [stockId],
+    );
+  }
+
+  Future<int> deleteStock(String stockId) async {
+    final db = await database;
+
+    return db.delete(
+      'stocks',
+      where: 'id = ?',
+      whereArgs: [stockId],
+    );
+  }
+
+  Future<bool> checkDatabaseExists(String path) async {
+    return await File(path).exists();
+  }
+
+  Future<void> createDatabaseDirectory(String path) async {
+    final directory = Directory(path);
+    if (!await directory.exists()) {
+      await directory.create(recursive: true);
+    }
+  }
+
+  Future<String> getStockDatabasePath() async {
+    if (Platform.isAndroid) {
+      final getAppPath = GetAppPath();
+      await getAppPath.initializeApplicationPath();
+      String directory = getAppPath.applicationPath;
+      await createDatabaseDirectory(
+          directory); // Create the directory if it doesn't exist
+      return path.join(directory, 'StockDatabase.db');
+    } else {
+      return "Not granted";
+    }
+  }
+
+  Future<void> deleteDatabaseFile() async {
+    final filePath = await dataPath();
+    final file = File(filePath);
+    if (await file.exists()) {
+      print("Delete stock database");
+      await file.delete();
+      _database = null; // Reset the database instance
+    }
+  }
+}
