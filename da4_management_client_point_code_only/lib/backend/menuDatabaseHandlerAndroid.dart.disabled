@@ -1,0 +1,134 @@
+import 'dart:io';
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart' as path;
+import '../backend/getAppPath.dart';
+import 'defaultMenu.dart';
+
+class MenuDatabaseHandlerAndroid {
+  static final MenuDatabaseHandlerAndroid instance =
+      MenuDatabaseHandlerAndroid._();
+  static Database? _database;
+
+  MenuDatabaseHandlerAndroid._();
+
+  Future<String> dataPath() async {
+    final getAppPath = GetAppPath();
+    await getAppPath.initializeApplicationPath();
+    String directory = getAppPath.applicationPath;
+    String fileName = 'MenuDatabase.db';
+    String filePath = '$directory$fileName';
+    return filePath;
+  }
+
+  Future<Database> get database async {
+    if (_database != null) {
+      return _database!;
+    }
+
+    _database = await initDatabase();
+    return _database!;
+  }
+
+  Future<Database> initDatabase() async {
+    final databasePath = await getmenuDatabasePath();
+
+    final bool databaseExists = await checkDatabaseExists(await dataPath());
+
+    if (!databaseExists) {
+      final getAppPath = GetAppPath();
+      await getAppPath.initializeApplicationPath();
+      String directory = getAppPath.applicationPath;
+
+      await createDatabaseDirectory(directory);
+
+      final db = await openDatabase(
+        databasePath,
+        version: 1,
+        onCreate: (db, version) async {
+          await db.execute(
+            'CREATE TABLE menus (id TEXT PRIMARY KEY, name TEXT, type TEXT, beli INTEGER, jual INTEGER)',
+          );
+          await addDefaultMenu(db);
+        },
+      );
+      return db;
+    }
+
+    return openDatabase(databasePath);
+  }
+
+  Future<void> addDefaultMenu(Database db) async {
+    List<Map<String, dynamic>> menuMixue = menuMixueDefault;
+
+    final batch = db.batch();
+    for (var menu in menuMixue) {
+      batch.insert('menus', menu);
+    }
+    await batch.commit();
+  }
+
+  Future<int> insertMenu(Map<String, dynamic> menuData) async {
+    final db = await database;
+    return db.insert('menus', menuData);
+  }
+
+  Future<List<Map<String, dynamic>>> getAllMenu() async {
+    final db = await database;
+    return db.query('menus');
+  }
+
+  Future<int> updateMenu(Map<String, dynamic> menuData) async {
+    final db = await database;
+    final menuId = menuData['id'];
+
+    return db.update(
+      'menus',
+      menuData,
+      where: 'id = ?',
+      whereArgs: [menuId],
+    );
+  }
+
+  Future<int> deleteMenu(String menuId) async {
+    final db = await database;
+
+    return db.delete(
+      'menus',
+      where: 'id = ?',
+      whereArgs: [menuId],
+    );
+  }
+
+  Future<bool> checkDatabaseExists(String path) async {
+    return await File(path).exists();
+  }
+
+  Future<void> createDatabaseDirectory(String path) async {
+    final directory = Directory(path);
+    if (!await directory.exists()) {
+      await directory.create(recursive: true);
+    }
+  }
+
+  Future<String> getmenuDatabasePath() async {
+    if (Platform.isAndroid) {
+      final getAppPath = GetAppPath();
+      await getAppPath.initializeApplicationPath();
+      String directory = getAppPath.applicationPath;
+      await createDatabaseDirectory(
+          directory); // Create the directory if it doesn't exist
+      return path.join(directory, 'MenuDatabase.db');
+    } else {
+      return "Not granted";
+    }
+  }
+
+  Future<void> deleteDatabaseFile() async {
+    final filePath = await dataPath();
+    final file = File(filePath);
+    if (await file.exists()) {
+      await file.delete();
+      _database = null; // Reset the database instance
+    }
+  }
+}
